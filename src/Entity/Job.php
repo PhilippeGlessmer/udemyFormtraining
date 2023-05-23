@@ -13,14 +13,18 @@ class Job implements GroupSequenceProviderInterface
 {
     private $title;
     private $place;
+
     /**
      * @CustomAssert\FrenchDomaineName(groups={"FrenchJob"})
      */
     private $contact;
+
     /**
      * @Assert\IsTrue(groups={"ForeignJob"},message="New-Work necessite un permis de travail!")
      */
     private $autorizationWork;
+
+    private $salary;
     /**
      * @return mixed
      */
@@ -95,4 +99,22 @@ class Job implements GroupSequenceProviderInterface
         }
         return $group;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSalary()
+    {
+        return $this->salary;
+    }
+
+    /**
+     * @param mixed $salary
+     */
+    public function setSalary($salary): void
+    {
+        $this->salary = $salary;
+    }
+
+
 }

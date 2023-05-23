@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\DataTransformer\EuroToDollarTransformer;
 use App\Service\RandomPlace;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, ChoiceType, EmailType, SubmitType, TextType};
+use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, ChoiceType, EmailType, MoneyType, SubmitType, TextType};
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -12,6 +14,15 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class JobType extends AbstractType
 {
+    private $transformer;
+
+    /**
+     * @param $transformer
+     */
+    public function __construct(EuroToDollarTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -30,11 +41,13 @@ class JobType extends AbstractType
                 ],
                 'constraints' => new Email(),
             ])
+            ->add('salary', MoneyType::class)
             ->add('autorizationWork', CheckboxType::class, [
                 'required' => false,
             ])
             ->add('save', SubmitType::class)
         ;
+        $builder->get('salary')->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
