@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Job;
+use App\Form\JobType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,12 +24,13 @@ class HomeController extends AbstractController
     public function add(Request $request): Response
     {
     $job = new Job();
-        $form = $this->createFormBuilder($job)
-            ->add('title', TextType::class)
-            ->add('place', TextType::class)
-            ->add('save', SubmitType::class)
-            ->getForm();
+//        $form = $this->createFormBuilder($job)
+//            ->add('title', TextType::class)
+//            ->add('place', TextType::class)
+//            ->add('save', SubmitType::class)
+//            ->getForm();
 
+        $form = $this->createForm(JobType::class, $job, ['my_title' => 'Super developper']);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             //dd($_POST['form']['title']);
