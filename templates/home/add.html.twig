@@ -10,3 +10,20 @@
         {{ form(form) }}
     </div>
 {% endblock %}
+   {% block javascripts %}
+       {{ parent() }}
+       <script>
+           var $techno = $('.techno');
+           $techno.change(function (){
+               var data = $techno.val();
+               $.ajax({
+                   url:"{{ path('app_ajax') }}",
+                   type: "POST",
+                   data: { 'techno' : data },
+                   success: function (reponse){
+                       $('.backOrFront').val(reponse.backOrFront)
+                   }
+               })
+           })
+       </script>
+   {% endblock %}

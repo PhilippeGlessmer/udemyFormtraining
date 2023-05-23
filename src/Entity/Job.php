@@ -26,6 +26,9 @@ class Job implements GroupSequenceProviderInterface
      */
     private $autorizationWork;
 
+    private $techno;
+
+    private $backOrFront;
     private $salary;
     /**
      * @return mixed
@@ -134,6 +137,38 @@ class Job implements GroupSequenceProviderInterface
     public function setSalary($salary): void
     {
         $this->salary = $salary;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTechno()
+    {
+        return $this->techno;
+    }
+
+    /**
+     * @param mixed $techno
+     */
+    public function setTechno($techno): void
+    {
+        $this->techno = $techno;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBackOrFront()
+    {
+        return $this->backOrFront;
+    }
+
+    /**
+     * @param mixed $backOrFront
+     */
+    public function setBackOrFront($backOrFront): void
+    {
+        $this->backOrFront = $backOrFront;
     }
 
 

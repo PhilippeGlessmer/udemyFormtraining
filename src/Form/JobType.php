@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\DataTransformer\EuroToDollarTransformer;
 use App\Service\RandomPlace;
+use App\Service\Technologie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\{CheckboxType,
     ChoiceType,
@@ -50,6 +51,18 @@ class JobType extends AbstractType
                     'class' => 'form-control mb-3'
                 ],
                 'constraints' => new Email(),
+            ])
+            ->add('techno', ChoiceType::class, [
+                'choices' => array_combine(Technologie::getListTechno(), Technologie::getListTechno()),
+                'attr' => [
+                    'class' => 'techno form-control mb-3'
+                ],
+            ])
+            ->add('backOrFront', ChoiceType::class, [
+                'choices' => ['Back' => 'Back', 'Front' => 'Front'],
+                'attr' => [
+                    'class' => 'backOrFront form-control mb-3'
+                ],
             ])
             ->add('salary', MoneyType::class)
 

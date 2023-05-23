@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Job;
 use App\Form\JobType;
+use App\Service\Technologie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,5 +45,12 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/backOrFront', name: 'app_ajax')]
+    public function backOrFront(Request $request){
+        $techno = $request->get('techno');
+        $backOrFront = Technologie::backOrFront($techno);
+        return new JsonResponse(['backOrFront' => $backOrFront]);
     }
 }
