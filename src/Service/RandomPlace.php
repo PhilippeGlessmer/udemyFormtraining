@@ -6,6 +6,7 @@ use phpDocumentor\Reflection\Types\String_;
 
 class RandomPlace
 {
+    const PLACES = ['Berlin', 'Alger', 'Paris', 'Londres', 'New-York'];
     public function getRandomPlace(): string
     {
         $places = ['Berlin', 'Alger', 'Paris', 'Londres', 'New-York'];
