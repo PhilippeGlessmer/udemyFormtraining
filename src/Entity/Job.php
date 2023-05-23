@@ -14,6 +14,8 @@ class Job implements GroupSequenceProviderInterface
     private $title;
     private $place;
 
+    private $country;
+
     /**
      * @CustomAssert\FrenchDomaineName(groups={"FrenchJob"})
      */
@@ -56,6 +58,24 @@ class Job implements GroupSequenceProviderInterface
     {
         $this->place = $place;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country): void
+    {
+        $this->country = $country;
+    }
+
+
     /**
      * @return mixed
      */

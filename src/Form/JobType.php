@@ -5,9 +5,18 @@ namespace App\Form;
 use App\DataTransformer\EuroToDollarTransformer;
 use App\Service\RandomPlace;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\{CheckboxType, ChoiceType, EmailType, MoneyType, SubmitType, TextType};
+use Symfony\Component\Form\Extension\Core\Type\{CheckboxType,
+    ChoiceType,
+    CountryType,
+    EmailType,
+    HiddenType,
+    MoneyType,
+    SubmitType,
+    TextType};
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -35,6 +44,7 @@ class JobType extends AbstractType
                 'constraints' => new Length(['min' => 3, 'minMessage' => 'Minimum 3 lettres'])
             ])
             ->add('place', PlaceType::class)
+            ->add('country', HiddenType::class)
             ->add('contact', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3'
@@ -42,10 +52,18 @@ class JobType extends AbstractType
                 'constraints' => new Email(),
             ])
             ->add('salary', MoneyType::class)
+
             ->add('autorizationWork', CheckboxType::class, [
                 'required' => false,
             ])
             ->add('save', SubmitType::class)
+            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event){
+                /** @var   $job */
+                $job = $event->getData();
+                $place = $job->getPlace();
+                $country = RandomPlace::getCountryByPlace($place);
+                $job->setCountry($country);
+            });
         ;
         $builder->get('salary')->addModelTransformer($this->transformer);
     }
