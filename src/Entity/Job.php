@@ -5,7 +5,7 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
-
+use App\Validator\Constraints  as CustomAssert;
 /**
 * @Assert\GroupSequenceProvider()
  */
@@ -13,6 +13,9 @@ class Job implements GroupSequenceProviderInterface
 {
     private $title;
     private $place;
+    /**
+     * @CustomAssert\FrenchDomaineName(groups={"FrenchJob"})
+     */
     private $contact;
     /**
      * @Assert\IsTrue(groups={"ForeignJob"},message="New-Work necessite un permis de travail!")
@@ -86,6 +89,9 @@ class Job implements GroupSequenceProviderInterface
         $group = ['Job'];
         if($this->getPlace() == 'New-York'){
             $group[] = "ForeignJob";
+        }
+        if($this->getPlace() == 'Paris'){
+            $group[] = "FrenchJob";
         }
         return $group;
     }

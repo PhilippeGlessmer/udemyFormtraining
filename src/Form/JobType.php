@@ -41,7 +41,7 @@ class JobType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-            "validation_groups" => false,
+//            "validation_groups" => false,
 
         ]);
         $resolver->setRequired([
