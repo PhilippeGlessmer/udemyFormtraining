@@ -18,10 +18,18 @@ class PlaceType extends AbstractType{
         $resolver->setDefaults([
             'choices' => array_combine(RandomPlace::PLACES,RandomPlace::PLACES ),
             'data' => $this->randomPlace->getRandomPlace(),
+            'label' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ]
         ]);
     }
     public function getParent()
     {
         return ChoiceType::class;
+    }
+    public function getBlockPrefix()
+    {
+        return 'custom_place';
     }
 }
